@@ -212,6 +212,14 @@ class TwitterAPIExchange
         $feed = curl_init();
         curl_setopt_array($feed, $options);
         $json = curl_exec($feed);
+     
+        if (false === $json)
+        {
+            $error = curl_error($feed);
+            curl_close($feed);
+            throw new Exception($error);
+        }
+        
         curl_close($feed);
 
         if ($return) { return $json; }
